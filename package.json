@@ -1,0 +1,15 @@
+{
+  "name": "@live-codes/monaco-editor",
+  "version": "0.1.0",
+  "description": "A patched version of Monaco Editor which allows specifying the TypeScript version to use",
+  "author": "Hatem Hosny",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "20.14.10",
+    "esbuild": "0.23.0"
+  },
+  "scripts": {
+    "build": "node ./build.js",
+    "bundle": "node ./bundle.js"
+  }
+}

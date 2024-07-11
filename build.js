@@ -28,13 +28,6 @@ const failableMergeBranch = (exec, name) => {
   }
 };
 
-// So, you can run this locally
-const dontDeploy = true;
-const envUser = process.env.USER_ACCOUNT;
-
-// For example:
-//   USER_ACCOUNT="typescript-deploys" SKIP_DEPLOY="true" node ./publish-monaco-editor.js latest
-
 const step = (msg) => console.log("\n\n - " + msg);
 
 function main() {
@@ -42,31 +35,17 @@ function main() {
   const typescriptTag = args[0] ? args[0] : "latest";
   const typescriptModuleName = args[1] ? args[1] : "typescript";
 
-  const monacoTypescriptTag = args[0] ? args[0] : "latest";
-  const isPushedTag = process.env.GITHUB_EVENT_NAME === "push";
-  const tagPrefix =
-    isPushedTag ||
-    monacoTypescriptTag.includes("http") ||
-    monacoTypescriptTag.includes("-pr-")
-      ? ""
-      : `--tag ${monacoTypescriptTag}`;
-
   console.log("## Creating build of Monaco Editor");
   process.stdout.write("> node publish-monaco-editor.js");
 
   const execME = (cmd) => exec(cmd, { cwd: "monaco-editor" });
-  const execRelease = (cmd) =>
-    exec(cmd, { cwd: "monaco-editor/out/monaco-editor" });
 
   // Create a tarball of the current version
   step("Cloning the repo");
 
   if (existsSync("monaco-editor")) {
-    // exec("rm -rf monaco-editor");
     rmSync("monaco-editor", { recursive: true, force: true });
   }
-  exec("git config --global user.email 'typescriptbot@microsoft.com'");
-  exec("git config --global user.name 'TypeScript Bot'");
   exec("git clone https://github.com/microsoft/monaco-editor.git");
 
   // Add typescript to the tsWorker export

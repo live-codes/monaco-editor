@@ -1040,7 +1040,7 @@ ${hLe(i)}`;return t}};gLe=class fLe extends du{constructor(){super(...arguments)
 /*! @license DOMPurify 3.0.5 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/3.0.5/LICENSE */
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.50.0(f4551a6f0ba5023c53acf7e6465175b54094a82c)
+ * Version: 0.50.0(78b4f36677afc0d0e2553408b11e30f52c7c93f0)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/

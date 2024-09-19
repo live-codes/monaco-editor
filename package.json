@@ -1,6 +1,6 @@
 {
   "name": "@live-codes/monaco-editor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A patched version of Monaco Editor which allows specifying the TypeScript version to use",
   "author": "Hatem Hosny",
   "license": "MIT",

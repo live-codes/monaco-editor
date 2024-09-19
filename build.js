@@ -3,7 +3,7 @@
 // based on https://github.com/microsoft/TypeScript-Make-Monaco-Builds/blob/master/publish-monaco-editor.js
 
 const { execSync } = require("child_process");
-const { existsSync, rmSync } = require("fs");
+const fs = require("fs");
 const bundle = require("./bundle");
 
 const args = process.argv.slice(2);
@@ -28,6 +28,17 @@ const failableMergeBranch = (exec, name) => {
   }
 };
 
+const patchEsmWorker = () => {
+  const path =
+    "monaco-editor/out/monaco-editor/esm/vs/base/browser/defaultWorkerFactory.js";
+  const content = fs.readFileSync(path, "utf8");
+  const patchedContent = content.replace(
+    "const isESM = true;",
+    "const isESM = false;"
+  );
+  fs.writeFileSync(path, patchedContent);
+};
+
 const step = (msg) => console.log("\n\n - " + msg);
 
 function main() {
@@ -43,8 +54,8 @@ function main() {
   // Create a tarball of the current version
   step("Cloning the repo");
 
-  if (existsSync("monaco-editor")) {
-    rmSync("monaco-editor", { recursive: true, force: true });
+  if (fs.existsSync("monaco-editor")) {
+    fs.rmSync("monaco-editor", { recursive: true, force: true });
   }
   exec("git clone https://github.com/microsoft/monaco-editor.git");
 
@@ -105,6 +116,9 @@ function main() {
 
   step("Re-running release");
   execME(`npm run build-monaco-editor`);
+
+  step("Apply patch to prevent using ESM workers");
+  patchEsmWorker();
 
   step("Creating bundles");
   bundle();

@@ -8,43 +8,28 @@ This was built for use in [LiveCodes](https://livecodes.io/).
 
 The editor is bundled as ESM. It can be used like this:
 
-[try in LiveCodes](https://livecodes.io/?x=id/mvkc9zu9sa2)
+[try in LiveCodes](https://livecodes.io/?x=id/nug2m5cf3ms)
 
-```js
-import * as monaco from "https://unpkg.com/@live-codes/monaco-editor/dist/monaco-editor.js";
-import "https://unpkg.com/@live-codes/monaco-editor/dist/monaco-editor.css";
+```html
+<div id="container" style="height: 200px;"></div>
 
-const editorBaseUrl = "https://unpkg.com/@live-codes/monaco-editor/dist/";
+<script type="module">
+  import { monaco } from "https://cdn.jsdelivr.net/npm/@live-codes/monaco-editor/monaco.js";
 
-// allow using web workers from CDN
-const toDataUrl = (content, type = "text/javascript") =>
-  `data:${type};charset=UTF-8;base64,` + btoa(content);
+  const editor = monaco.editor.create(document.getElementById("container"), {
+    value: `function x() {\n\tconsole.log("Hello world!");\n}`,
+    language: "javascript",
+  });
+</script>
+```
 
-const getWorkerDataURL = (url) => toDataUrl(`importScripts("${url}");`);
+Alternatively, the base URL can be specified:
 
-// configure monaco to use the web workers
-self.MonacoEnvironment = {
-  getWorkerUrl: function (moduleId, label) {
-    if (label === "json") {
-      return getWorkerDataURL(editorBaseUrl + "json.worker.js");
-    }
-    if (label === "css" || label === "scss" || label === "less") {
-      return getWorkerDataURL(editorBaseUrl + "css.worker.js");
-    }
-    if (label === "html" || label === "handlebars" || label === "razor") {
-      return getWorkerDataURL(editorBaseUrl + "html.worker.js");
-    }
-    if (label === "typescript" || label === "javascript") {
-      return getWorkerDataURL(editorBaseUrl + "ts.worker.js");
-    }
-    return getWorkerDataURL(editorBaseUrl + "editor.worker.js");
-  },
-};
+```ts
+import { loadMonaco } from "https://cdn.jsdelivr.net/npm/@live-codes/monaco-editor/load-monaco.js";
 
-monaco.editor.create(document.getElementById("container"), {
-  value: ["function x() {", '\tconsole.log("Hello world!");', "}"].join("\n"),
-  language: "javascript",
-});
+const baseUrl = "https://cdn.jsdelivr.net/npm/@live-codes/monaco-editor/dist/";
+const monaco = await loadMonaco(baseUrl);
 ```
 
 ## Build

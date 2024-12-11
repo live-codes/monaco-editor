@@ -32,6 +32,7 @@ export const loadMonaco = async ({
 
   if (injectStyles) {
     const stylesheet = document.createElement("link");
+    stylesheet.crossOrigin = "anonymous";
     stylesheet.href = editorBaseUrl + "monaco-editor.css";
     stylesheet.rel = "stylesheet";
     document.head.appendChild(stylesheet);

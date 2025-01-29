@@ -1,9 +1,14 @@
 {
   "name": "@live-codes/monaco-editor",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A patched version of Monaco Editor which allows specifying the TypeScript version to use",
   "author": "Hatem Hosny",
   "license": "MIT",
+  "main": "monaco.js",
+  "exports": {
+    ".": "./monaco.js",
+    "./load-monaco": "./load-monaco.js"
+  },
   "dependencies": {
     "@types/node": "20.14.10",
     "esbuild": "0.23.0"

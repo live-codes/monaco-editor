@@ -5,6 +5,9 @@ export const loadMonaco = async ({
   const editorBaseUrl =
     baseUrl || import.meta.url.split("/").slice(0, -1).join("/") + "/dist/";
 
+  const tailwindcssWorkerUrl =
+    "https://cdn.jsdelivr.net/npm/@live-codes/browser-compilers/dist/tailwindcss/monaco-tailwindcss.worker.js";
+
   // allow using web workers from CDN
   const toDataUrl = (content, type = "text/javascript") =>
     `data:${type};charset=UTF-8;base64,` + btoa(content);
@@ -25,6 +28,9 @@ export const loadMonaco = async ({
       }
       if (label === "typescript" || label === "javascript") {
         return getWorkerDataURL(editorBaseUrl + "ts.worker.js");
+      }
+      if (label === "tailwindcss") {
+        return getWorkerDataURL(tailwindcssWorkerUrl);
       }
       return getWorkerDataURL(editorBaseUrl + "editor.worker.js");
     },
